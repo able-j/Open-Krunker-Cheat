@@ -26,7 +26,7 @@ We are always looking for help/tips!
 
 ### Installation
 
-Script kiddies, begone. If you haven't learned how to install something as simple as this, you dont deserver to use a Segway. Segways are for cool people. 
+Script kiddies, begone. If you haven't learned how to install something as simple as this, you dont deserve to use a Segway. Segways are for cool people. 
 
 ### Todos
 
