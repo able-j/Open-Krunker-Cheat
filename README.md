@@ -1,2 +1,47 @@
-# Open-Krunker-Cheat
-A open-source Krunker cheat. 
+# Open Source Krunker Cheat (Segway)
+
+## [WORKING]
+Seqway is an open source, Krunker.io cheat. 
+## Features!
+
+  - GUI
+  - Aimbot
+  - ESP
+  - Perfect Recoil
+  - BHop
+  - Smooth Aim
+  - Auto Reload
+
+## Planned Features!
+
+  - CHAMS
+  - A Guide?
+
+### Collaborators
+
+We are always looking for help/tips!
+
+* [Helixable](https://github.com/Helixable)
+* [Skid Lamer](https://github.com/SkidLamer)
+
+### Installation
+
+Script kiddies, begone. If you haven't learned how to install something as simple as this, you dont deserver to use a Segway. Segways are for cool people. 
+
+### Todos
+
+ - Streamer mode? (Seemingly Natural Aiming) >:D
+ - Add God Mode (Full on hardcore Aimbot with no limits and toggles, aka **EzBAN**)
+
+### Update Log
+ - 1/12/2020 - Added base script by Skid Lamer (Krunker **v1.9.6**)
+
+### License
+----
+
+MIT
+
+# Notice
+Although this is Open Source, please do not repost this script and claim it as your own. It's pretty easy to recognize stolen scripts. 
+
+Thanks for watching! Make sure to subscribe and drop a like if you enjoyed the video!
