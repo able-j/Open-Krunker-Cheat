@@ -1,7 +1,7 @@
 # Open Source Krunker Cheat (Segway)
 
 ## [WORKING]
-Seqway is an open source, Krunker.io cheat. 
+Segway is an open source, Krunker.io cheat. 
 ## Features!
 
   - GUI
