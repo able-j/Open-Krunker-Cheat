@@ -39,9 +39,9 @@ Script kiddies, begone. If you haven't learned how to install something as simpl
 ### License
 ----
 
-MIT
+GNU, forgot what it does.
 
 # Notice
-Although this is Open Source, please do not repost this script and claim it as your own. It's pretty easy to recognize stolen scripts. 
+Although this is Open Source, please do not repost this script and claim it as your own. It's pretty easy to recognize stolen scripts. DoUBlE StAnDArD?!
 
 Thanks for watching! Make sure to subscribe and drop a like if you enjoyed the video!
