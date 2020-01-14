@@ -15,16 +15,151 @@ nAuto
 weaponIndex
 isYou = renderYou
 */
+var seg = {
+    "aim": true,
+    "esp": true,
+    "chams":true,
+    "recoil": true,
+    "bhop": true,
+    "cleanaim": false,
+    "reload": true
+}
 
 let onLoad = ()=>{ //Runs once when game finishes loading
     'use strict';
 }
 
-let onTick = (vars, me, inputs, world) =>{
+let onTick = (vars, me, inputs, world) =>{ //Runs every in-game tick
     'use strict';
-    return inputs; //Do not remove
-}
+    const controls = world.controls; //Current keys pressed. Use like this (For Enter): controls.keys[13] 
+    const players = world.players.list; //Players and corresponding telemetry
+    const PI2 = Math.PI * 2;
+    //Input Ids
+    const input = {
+        speed: 1,
+        ydir: 2,
+        xdir: 3,
+        shoot: 5,
+        scope: 6,
+        jump: 7,
+        crouch: 8,
+        reload: 9,
+        weapon: 10,
+    };
+    
+    //Basic camera info
+    const consts = {
+        "cameraHeight": 1.5,
+        "playerHeight": 11,
+        "cameraHeight": 1.5,
+        "headScale": 2,
+        "crouchDst": 3,
+        "camChaseTrn": 0.0022,
+        "camChaseSpd": 0.0012,
+        "camChaseSen": 0.2,
+        "camChaseDst": 24,
+        "recoilMlt": 0.3,
+        "nameOffset": 0.6,
+        "ammos": 0x1c,
+        "nameOffsetHat": 0.8,
+        "hitBoxPad": 1,
+    };
+    
+    //Very useful functions
+    let getDirection = function(a, b, c, d) { //Direct between two coordinates
+        return Math.atan2(b - d, a - c);
+    };
+    let getDistance3D = function(a, b, c, d, e, f) { //Distance between two 3D coordinates
+        let g = a - d, h = b - e, i = c - f;
+        return Math.sqrt(g * g + h * h + i * i);
+    };
+    let getXDir = function(a, b, c, d, e, f) {
+        let g = Math.abs(b - e), h = getDistance3D(a, b, c, d, e, f);
+        return Math.asin(g / h) * (b > e ? -1 : 1);
+    };
 
+    let dAngleTo = function(x, y, z) {
+        let ty = normaliseYaw(getDirection(controls.object.position.z, controls.object.position.x, z, x));
+        let tx = getXDir(controls.object.position.x, controls.object.position.y, controls.object.position.z, x, y, z);
+        let oy = normaliseYaw(controls.object.rotation.y);
+        let ox = controls[pchObjc].rotation.x;
+        let dYaw = Math.min(Math.abs(ty - oy), Math.abs(ty - oy - PI2), Math.abs(ty - oy + PI2));
+        let dPitch = tx - ox;
+        return Math.hypot(dYaw, dPitch);
+    };
+
+    let calcAngleTo = function(player) { //Angle from player to entity, also accounting for crouch
+        return dAngleTo(player.x3, player.y3 + consts.playerHeight - (consts.headScale + consts.hitBoxPad) / 2 - player.crouchVal * consts.crouchDst, player.z3);
+    };
+    let calcDistanceTo = function(player) { //Calculate distance between players
+        return getDistance3D(player.x3, player.y3, player.z3, me.x, me.y, me.z)
+    };
+    let isCloseEnough = function(player) { //Check if player is close enough to entity to shoot accuratley
+        let distance = calcDistanceTo(player); return me.weapon.range >= distance && ("Shotgun" != me.weapon.name || distance < 70) && ("Akimbo Uzi" != me.weapon.name || distance < 100);
+    };
+    let canHit = function(player) {
+        return null == world[canSee](me, player.x3, player.y3 - player.crouchVal * consts.crouchDst, player.z3)
+    };
+    let isEnemy = function(player) { //Check if entity is enemy player
+        return !me.team || player.team != me.team
+    };
+    let inView = (entity) => (null == world[canSee](me, entity.x, entity.y, entity.z)) && (null == world[canSee](renderer.camera[getWorldPosition](), entity.x, entity.y, entity.z, 10)); //Check if entity is in view frame
+    let isFriendly = (entity) => (me && me.team ? me.team : me.spectating ? 0x1 : 0x0) == entity.team;
+    let normaliseYaw = function(yaw) {
+        return (yaw % PI2 + PI2) % PI2;
+    };
+    
+    //Cheats:
+    
+    // Auto Reload (Update Proof)
+    if (document.getElementById("ammoVal").innerHTML.split("<")[0] == "0 ") {
+        controls.keys[controls.reloadKey] = 1;
+    } else {
+        controls.keys[controls.reloadKey] = 0;
+    }
+    
+    //ESP
+    if (world && world.players) {
+        world.players.list.map((entity, index, array) => {
+            if (defined(entity[objInstances]) && entity[objInstances]) {
+                if (seg.esp) {entity[cnBSeen] = true} else {entity[cnBSeen] = false}; //Iffy
+                for (let i = 0; i < entity[objInstances].children.length; i++) {
+                    const object3d = entity[objInstances].children[i];
+                    for (let j = 0; j < object3d.children.length; j++) {
+                        const mesh = object3d.children[j];
+                        if (mesh && mesh.type == "Mesh") {
+                            const material = mesh.material;
+                            if (seg.chams) {
+                                material.alphaTest = 1;
+                                material.depthTest = false;
+                                material.fog = false;
+                                material.emissive.g = 1;
+                                material.wireframe = true;
+                            } else { // Reset if no CHAMS
+                                material.alphaTest = 0;
+                                material.depthTest = true;
+                                material.fog = true;
+                                material.emissive.g = 0;
+                                material.wireframe = false;
+                            }
+                        };
+                    };
+                };
+            };
+        });
+    };
+    
+    
+    //Aimbot
+    
+    
+    
+    //Bhop
+    
+    
+    //Do not change anything beyond this
+    return inputs; 
+}
 let onRender = (vars, ctx, UIscale, world, renderer, me) =>{
     'use strict';
 }
