@@ -3,17 +3,16 @@
 ## [WORKING]
 Segway is an open source, Krunker.io cheat. 
 ## Features!
+###(Many more coming soon!)
+  - Auto Reload (Unpatchable :D)
 
-  - GUI
+## Planned Features!
+  - GUI             
   - Aimbot
   - ESP
   - Perfect Recoil
   - BHop
   - Smooth Aim
-  - Auto Reload
-
-## Planned Features!
-
   - CHAMS
   - A Guide?
 
